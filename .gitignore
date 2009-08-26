@@ -1,0 +1,8 @@
+qtc-gdbmacros
+.DS_Store
+*~
+*.gch
+*.o
+.player
+backup
+doc
