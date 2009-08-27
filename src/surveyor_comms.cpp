@@ -36,6 +36,9 @@
 #include <sys/time.h>
 #include <time.h>
 #include <string.h>
+// CARLOS: added libraries:
+#include <iomanip>
+#include <iostream>
 
 srv1_comm_t *srv1_create(const char *port) { 
 	srv1_comm_t *ret = (srv1_comm_t *) malloc(sizeof(srv1_comm_t));
@@ -137,7 +140,7 @@ int srv1_flush_input(srv1_comm_t *x) {
 int srv1_open(srv1_comm_t *x) { 
 
 	struct termios term;
-	int flags; 
+//	int flags;
 	int fd; 
 
 	printf("Opening connection to Surveyor on %s...", x->port);
@@ -300,7 +303,7 @@ void calc_rot_hackish(double dx, signed char *left, signed char *right) {
 	int l = *left; 
 	int r = *right;
 	double angular = 0;
-	double newangular;
+//	double newangular;
 	if (fabs(dx) < 0.05) {
 		return;
 	} 
@@ -430,7 +433,7 @@ int srv1_set_motors(srv1_comm_t *x, signed char l, signed char r, double t) {
 			return 1;
 		}
 		printf("srv1_set_speed(): warning: failed response: %c%c!!!\n", cmdbuf[0], cmdbuf[1]);
-		int bytes = srv1_flush_input(x);
+//		int bytes = srv1_flush_input(x);
 		printf("srv1: flushed %d bytes from input buffer..\n");
 //		return 0;   // CARLOS: thinks this should be commented this out here
 	}
@@ -462,6 +465,9 @@ int srv1_set_speed(srv1_comm_t *x, double dx, double dw) {
 
 int srv1_fill_image(srv1_comm_t *x) {
 	
+   // CARLOS: pause for debugging and see what picture should be taking:
+   std::cin.ignore();
+
 	char specbuf[10];
 
 	memset(specbuf, 0, 10);
@@ -552,6 +558,10 @@ int srv1_fill_image(srv1_comm_t *x) {
 	// 1.5 secs is long enough.
 	read_limited(x->fd, x->frame, x->frame_size, 1500000);
 
+
+	// CARLOS: explicitly, writing image to file (for testing only)
+	savePhoto("test", x->frame, x->frame_size);
+
 	return 1;
 }
 
@@ -589,7 +599,7 @@ int srv1_read_sensors(srv1_comm_t *x) {
 	
    // CARLOS: Needs to handle returns (1: success), (0: error)
 	srv1_fill_image(x);
-	srv1_fill_ir(x);
+//	srv1_fill_ir(x);  // CARLOS: not tested yet
 
 	return 1;
 }
@@ -610,4 +620,44 @@ double srv1_range_to_distance(int rangereading) {
 
 	return a + b + c + d;
 } 
+
+// *************************************************
+// Added method for testing Picture Delay issue:
+int saveNamedData(const char *name, char *data, int size)
+{
+   int   fd;
+
+   fd = open(name, O_TRUNC | O_CREAT | O_WRONLY, 00644);
+   if (fd < 0)
+      return 0;
+
+
+   if (write(fd, data, size) != size)
+   {
+      close(fd);
+      return 0;
+   }
+   close(fd);
+
+   return 1;
+}
+
+void savePhoto(const std::string aPrefix, char *data, int size, uint32_t aWidth)
+{
+   static int nFrameNo = 0;
+
+  std::ostringstream filename;
+  filename.imbue(std::locale(""));
+  filename.fill('0');
+
+  filename << aPrefix << std::setw(aWidth) << nFrameNo++;
+//  if (GetCompression())
+    filename << ".jpg";
+//  else
+//    filename << ".ppm";
+
+//  scoped_lock_t lock(mPc->mMutex);
+    saveNamedData(filename.str().c_str(), data, size);
+}
+
 
