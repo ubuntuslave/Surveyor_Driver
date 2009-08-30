@@ -37,9 +37,9 @@
 #include <sys/time.h>
 #include <time.h>
 #include <string.h>
-// CARLOS: added libraries:
-#include <iomanip>
-#include <iostream>
+// CARLOS: added libraries when using as cpp:
+//#include <iomanip>
+//#include <iostream>
 
 srv1_comm_t *
 srv1_create(const char *port)
@@ -755,41 +755,41 @@ srv1_range_to_distance(int rangereading)
 
 // *************************************************
 // Added method for testing Picture Delay issue:
-int
-saveNamedData(const char *name, char *data, int size)
-{
-   int fd;
-
-   fd = open(name, O_TRUNC | O_CREAT | O_WRONLY, 00644);
-   if (fd < 0)
-      return 0;
-
-   if (write(fd, data, size) != size)
-      {
-         close(fd);
-         return 0;
-      }
-   close(fd);
-
-   return 1;
-}
-
-void
-savePhoto(const std::string aPrefix, char *data, int size, uint32_t aWidth)
-{
-   static int nFrameNo = 0;
-
-   std::ostringstream filename;
-   filename.imbue(std::locale(""));
-   filename.fill('0');
-
-   filename << aPrefix << std::setw(aWidth) << nFrameNo++;
-   //  if (GetCompression())
-   filename << ".jpg";
-   //  else
-   //    filename << ".ppm";
-
-   //  scoped_lock_t lock(mPc->mMutex);
-   saveNamedData(filename.str().c_str(), data, size);
-}
+//int
+//saveNamedData(const char *name, char *data, int size)
+//{
+//   int fd;
+//
+//   fd = open(name, O_TRUNC | O_CREAT | O_WRONLY, 00644);
+//   if (fd < 0)
+//      return 0;
+//
+//   if (write(fd, data, size) != size)
+//      {
+//         close(fd);
+//         return 0;
+//      }
+//   close(fd);
+//
+//   return 1;
+//}
+//
+//void
+//savePhoto(const std::string aPrefix, char *data, int size, uint32_t aWidth)
+//{
+//   static int nFrameNo = 0;
+//
+//   std::ostringstream filename;
+//   filename.imbue(std::locale(""));
+//   filename.fill('0');
+//
+//   filename << aPrefix << std::setw(aWidth) << nFrameNo++;
+//   //  if (GetCompression())
+//   filename << ".jpg";
+//   //  else
+//   //    filename << ".ppm";
+//
+//   //  scoped_lock_t lock(mPc->mMutex);
+//   saveNamedData(filename.str().c_str(), data, size);
+//}
 

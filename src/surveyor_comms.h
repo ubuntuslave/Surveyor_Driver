@@ -25,16 +25,16 @@
 #ifndef SURVEYOR_COMMS_H_
 #define SURVEYOR_COMMS_H_
 
-// CARLOS: commented out:
-//#ifdef __cplusplus
-//extern "C" {
-//#endif
+// CARLOS: comments this out for cpp:
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <stdint.h>
 #include <limits.h>
 
-// CARLOS: added libraries:
-#include <sstream>
+// CARLOS: added libraries when using cpp:
+//#include <sstream>
 
 #define SRV1_IMAGE_OFF 'Z'
 
@@ -122,18 +122,18 @@ int srv1_reset_comms(srv1_comm_t *x);
  * \param rangereading Reading from a IR.
  * \return approximated distance in cm
  */
-double srv1_range_to_distance(int rangereading);
+//double srv1_range_to_distance(int rangereading);
+//
+//// Added method for testing Picture Delay issue:
+//int saveNamedData(const char *name, char *data, int size);
+///// Save the frame
+///// @arg aPrefix is the string prefix to name the image.
+///// @arg aWidth is the number of 0s to pad the image numbering with.
+//void savePhoto(const std::string aPrefix, char *data, int size, uint32_t aWidth = 4);
 
-// Added method for testing Picture Delay issue:
-int saveNamedData(const char *name, char *data, int size);
-/// Save the frame
-/// @arg aPrefix is the string prefix to name the image.
-/// @arg aWidth is the number of 0s to pad the image numbering with.
-void savePhoto(const std::string aPrefix, char *data, int size, uint32_t aWidth = 4);
-
-// CARLOS: commented out:
-//#ifdef __cplusplus
-//}
-//#endif
+// CARLOS: comments this out for cpp:
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SURVEYOR_COMMS_H_ */
