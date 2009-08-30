@@ -58,18 +58,18 @@
  The surveyor driver provides the following device interfaces:
 
  - @ref interface_position2d
-    - This interface does not return odometry data, but accepts velocity commands.
+ - This interface does not return odometry data, but accepts velocity commands.
 
  - @ref interface_camera
-    - The camera on the robot returns JPEG images.
+ - The camera on the robot returns JPEG images.
 
  - @ref interface_ir
-    - The robot has 4 IR beacons which can act as rudimentary range-finders
-       - UNIMPLEMENTED
+ - The robot has 4 IR beacons which can act as rudimentary range-finders
+ - UNIMPLEMENTED
 
  - @ref interface_dio
-    - The robot has 5 pins which can be used as digital in/out ports.
-       - UNIMPLEMENTED
+ - The robot has 5 pins which can be used as digital in/out ports.
+ - UNIMPLEMENTED
 
  @par  Supported configuration requests
 
@@ -78,29 +78,29 @@
  @par  Configuration file options
 
  - port (string)
-    - Serial port used to communicate with the robot
-       - Default: "/dev/ttyUSB0"
+ - Serial port used to communicate with the robot
+ - Default: "/dev/ttyUSB0"
  - image_size (string)
-    - Size of the images returned by the camera.
-       - Default: "320x240"
-       - Allowed values: "320x240", "160x128", "80x64"
+ - Size of the images returned by the camera.
+ - Default: "320x240"
+ - Allowed values: "320x240", "160x128", "80x64"
  - plugin (string)
-    - Relative or Absolute path to the location of the shared-object plugin driver.
+ - Relative or Absolute path to the location of the shared-object plugin driver.
 
  @par  Example
 
  @verbatim
  driver
- (
-   name "surveyor"
-   plugin "libSurveyor_Driver.so"
-   provides ["position2d:0" "camera:0"]
-   port "/dev/ttyUSB0"
- )
+    (
+       name "surveyor"
+       plugin "libSurveyor_Driver.so"
+       provides ["position2d:0" "camera:0"]
+       port "/dev/ttyUSB0"
+    )
  @endverbatim
 
  @bug
- - Camera interface appears delayed for an arbitrary sequence of snapshots
+ - Camera interface has a small delay for snapshots (Robot has to focus first, and then shoot)
  - Camera rate is very slow - about 1fps...Could do better: at least 4fps
 
  @todo
@@ -123,7 +123,7 @@ class Surveyor : public Driver
        * @param section Current section in configuration file
        */
       Surveyor(ConfigFile *cf, int section);
-//      ~Surveyor(void);  ///< Destructor
+      //      ~Surveyor(void);  ///< Destructor
 
       /** @brief Set up the device and start the device thread by calling StartThread(), which spawns a new thread and executes
        * Surveyor::Main(), which contains the main loop for the driver
@@ -137,7 +137,6 @@ class Surveyor : public Driver
        */
       int
       Shutdown();
-
 
       /** @brief  Message handler that sends a response if necessary using Publish().
        *  This function is called once for each message in the incoming queue.
@@ -157,19 +156,19 @@ class Surveyor : public Driver
       virtual void
       Main();
 
-      const char *portname;   ///< Serial port
+      const char *portname; ///< Serial port
 
-      player_devaddr_t position_addr;  ///< Address of the position device (wheels odometry)
-      player_devaddr_t camera_addr;    ///< Address of the camera device
-      player_devaddr_t ir_addr;        ///< Address of the infrared (IR) beacons
-      player_devaddr_t dio_addr;       ///< Address of the digital input/output pins (ports)
+      player_devaddr_t position_addr; ///< Address of the position device (wheels odometry)
+      player_devaddr_t camera_addr; ///< Address of the camera device
+      player_devaddr_t ir_addr; ///< Address of the infrared (IR) beacons
+      player_devaddr_t dio_addr; ///< Address of the digital input/output pins (ports)
 
-      srv1_comm_t *srvdev;    ///< The surveyor object
+      srv1_comm_t *srvdev; ///< The surveyor object
 
       player_position2d_cmd_vel_t position_cmd; ///< position2d velocity command
-      player_position2d_geom_t pos_geom;        ///< position2d geometry
+      player_position2d_geom_t pos_geom; ///< position2d geometry
 
-      int setup_image_mode;      ///< Desired camera size
+      int setup_image_mode; ///< Desired camera size
 };
 
 /** @brief Factory creation function that instantiates the Driver

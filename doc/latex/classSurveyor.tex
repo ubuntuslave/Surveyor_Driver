@@ -94,31 +94,19 @@ These robots can be controlled via ZigBee which is attached to a USB serial port
 The surveyor driver provides the following device interfaces:
 
 \begin{itemize}
-\item interface\_\-position2d\begin{itemize}
-\item This interface does not return odometry data, but accepts velocity commands.\end{itemize}
-\end{itemize}
+\item interface\_\-position2d\item This interface does not return odometry data, but accepts velocity commands.\end{itemize}
 
 
 \begin{itemize}
-\item interface\_\-camera\begin{itemize}
-\item The camera on the robot returns JPEG images.\end{itemize}
-\end{itemize}
+\item interface\_\-camera\item The camera on the robot returns JPEG images.\end{itemize}
 
 
 \begin{itemize}
-\item interface\_\-ir\begin{itemize}
-\item The robot has 4 IR beacons which can act as rudimentary range-finders\begin{itemize}
-\item UNIMPLEMENTED\end{itemize}
-\end{itemize}
-\end{itemize}
+\item interface\_\-ir\item The robot has 4 IR beacons which can act as rudimentary range-finders\item UNIMPLEMENTED\end{itemize}
 
 
 \begin{itemize}
-\item interface\_\-dio\begin{itemize}
-\item The robot has 5 pins which can be used as digital in/out ports.\begin{itemize}
-\item UNIMPLEMENTED\end{itemize}
-\end{itemize}
-\end{itemize}
+\item interface\_\-dio\item The robot has 5 pins which can be used as digital in/out ports.\item UNIMPLEMENTED\end{itemize}
 
 
 \begin{Desc}
@@ -130,17 +118,7 @@ The surveyor driver provides the following device interfaces:
 \begin{Desc}
 \item[Configuration file options]\end{Desc}
 \begin{itemize}
-\item port (string)\begin{itemize}
-\item Serial port used to communicate with the robot\begin{itemize}
-\item Default: \char`\"{}/dev/ttyUSB0\char`\"{}\end{itemize}
-\end{itemize}
-\item image\_\-size (string)\begin{itemize}
-\item Size of the images returned by the camera.\begin{itemize}
-\item Default: \char`\"{}320x240\char`\"{}\item Allowed values: \char`\"{}320x240\char`\"{}, \char`\"{}160x128\char`\"{}, \char`\"{}80x64\char`\"{}\end{itemize}
-\end{itemize}
-\item plugin (string)\begin{itemize}
-\item Relative or Absolute path to the location of the shared-object plugin driver.\end{itemize}
-\end{itemize}
+\item port (string)\item Serial port used to communicate with the robot\item Default: \char`\"{}/dev/ttyUSB0\char`\"{}\item image\_\-size (string)\item Size of the images returned by the camera.\item Default: \char`\"{}320x240\char`\"{}\item Allowed values: \char`\"{}320x240\char`\"{}, \char`\"{}160x128\char`\"{}, \char`\"{}80x64\char`\"{}\item plugin (string)\item Relative or Absolute path to the location of the shared-object plugin driver.\end{itemize}
 
 
 \begin{Desc}
@@ -149,19 +127,19 @@ The surveyor driver provides the following device interfaces:
 
 \footnotesize\begin{verbatim}
  driver
- (
-   name "surveyor"
-   plugin "libSurveyor_Driver.so"
-   provides ["position2d:0" "camera:0"]
-   port "/dev/ttyUSB0"
- )
+    (
+       name "surveyor"
+       plugin "libSurveyor_Driver.so"
+       provides ["position2d:0" "camera:0"]
+       port "/dev/ttyUSB0"
+    )
  \end{verbatim}
 \normalsize
 
 
 \begin{Desc}
 \item[\hyperlink{bug__bug000001}{Bug}]\begin{itemize}
-\item Camera interface appears delayed for an arbitrary sequence of snapshots\item Camera rate is very slow - about 1fps...Could do better: at least 4fps\end{itemize}
+\item Camera interface has a small delay for snapshots (Robot has to focus first, and then shoot)\item Camera rate is very slow - about 1fps...Could do better: at least 4fps\end{itemize}
 \end{Desc}
 \begin{Desc}
 \item[\hyperlink{todo__todo000001}{Todo}]\begin{itemize}

@@ -103,28 +103,16 @@ These robots can be controlled via ZigBee which is attached to a USB serial port
 <dl class="user" compact><dt><b>Provides</b></dt><dd></dd></dl>
 The surveyor driver provides the following device interfaces:<p>
 <ul>
-<li>interface_position2d<ul>
-<li>This interface does not return odometry data, but accepts velocity commands.</li></ul>
-</li></ul>
+<li>interface_position2d</li><li>This interface does not return odometry data, but accepts velocity commands.</li></ul>
 <p>
 <ul>
-<li>interface_camera<ul>
-<li>The camera on the robot returns JPEG images.</li></ul>
-</li></ul>
+<li>interface_camera</li><li>The camera on the robot returns JPEG images.</li></ul>
 <p>
 <ul>
-<li>interface_ir<ul>
-<li>The robot has 4 IR beacons which can act as rudimentary range-finders<ul>
-<li>UNIMPLEMENTED</li></ul>
-</li></ul>
-</li></ul>
+<li>interface_ir</li><li>The robot has 4 IR beacons which can act as rudimentary range-finders</li><li>UNIMPLEMENTED</li></ul>
 <p>
 <ul>
-<li>interface_dio<ul>
-<li>The robot has 5 pins which can be used as digital in/out ports.<ul>
-<li>UNIMPLEMENTED</li></ul>
-</li></ul>
-</li></ul>
+<li>interface_dio</li><li>The robot has 5 pins which can be used as digital in/out ports.</li><li>UNIMPLEMENTED</li></ul>
 <p>
 <dl class="user" compact><dt><b>Supported configuration requests</b></dt><dd></dd></dl>
 <ul>
@@ -132,30 +120,20 @@ The surveyor driver provides the following device interfaces:<p>
 <p>
 <dl class="user" compact><dt><b>Configuration file options</b></dt><dd></dd></dl>
 <ul>
-<li>port (string)<ul>
-<li>Serial port used to communicate with the robot<ul>
-<li>Default: "/dev/ttyUSB0"</li></ul>
-</li></ul>
-</li><li>image_size (string)<ul>
-<li>Size of the images returned by the camera.<ul>
-<li>Default: "320x240"</li><li>Allowed values: "320x240", "160x128", "80x64"</li></ul>
-</li></ul>
-</li><li>plugin (string)<ul>
-<li>Relative or Absolute path to the location of the shared-object plugin driver.</li></ul>
-</li></ul>
+<li>port (string)</li><li>Serial port used to communicate with the robot</li><li>Default: "/dev/ttyUSB0"</li><li>image_size (string)</li><li>Size of the images returned by the camera.</li><li>Default: "320x240"</li><li>Allowed values: "320x240", "160x128", "80x64"</li><li>plugin (string)</li><li>Relative or Absolute path to the location of the shared-object plugin driver.</li></ul>
 <p>
 <dl class="user" compact><dt><b>Example</b></dt><dd></dd></dl>
 <div class="fragment"><pre class="fragment">
  driver
- (
-   name "surveyor"
-   plugin "libSurveyor_Driver.so"
-   provides ["position2d:0" "camera:0"]
-   port "/dev/ttyUSB0"
- )
+    (
+       name "surveyor"
+       plugin "libSurveyor_Driver.so"
+       provides ["position2d:0" "camera:0"]
+       port "/dev/ttyUSB0"
+    )
  </pre></div><p>
 <dl compact><dt><b><a class="el" href="bug.html#_bug000001">Bug:</a></b></dt><dd><ul>
-<li>Camera interface appears delayed for an arbitrary sequence of snapshots</li><li>Camera rate is very slow - about 1fps...Could do better: at least 4fps</li></ul>
+<li>Camera interface has a small delay for snapshots (Robot has to focus first, and then shoot)</li><li>Camera rate is very slow - about 1fps...Could do better: at least 4fps</li></ul>
 </dd></dl>
 <dl compact><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd><ul>
 <li>Property bags to change image size on the fly</li><li>Implement IR (IR sensors are very noisy and produce false negatives on dark and shiny obstacles)</li><li>Implement DIO</li><li>Opaque interface to set program</li></ul>
@@ -203,7 +181,7 @@ Constructor for the <a class="el" href="classSurveyor.html" title="Plugin Driver
 
 <p>Definition at line <a class="el" href="surveyor__driver_8cc-source.html#l00042">42</a> of file <a class="el" href="surveyor__driver_8cc-source.html">surveyor_driver.cc</a>.</p>
 
-<p>References <a class="el" href="surveyor__driver_8h-source.html#l00163">camera_addr</a>, <a class="el" href="surveyor__driver_8h-source.html#l00165">dio_addr</a>, <a class="el" href="surveyor__driver_8h-source.html#l00164">ir_addr</a>, <a class="el" href="surveyor__driver_8h-source.html#l00160">portname</a>, <a class="el" href="surveyor__driver_8h-source.html#l00162">position_addr</a>, <a class="el" href="surveyor__driver_8h-source.html#l00172">setup_image_mode</a>, and <a class="el" href="surveyor__driver_8h-source.html#l00167">srvdev</a>.</p>
+<p>References <a class="el" href="surveyor__driver_8h-source.html#l00162">camera_addr</a>, <a class="el" href="surveyor__driver_8h-source.html#l00164">dio_addr</a>, <a class="el" href="surveyor__driver_8h-source.html#l00163">ir_addr</a>, <a class="el" href="surveyor__driver_8h-source.html#l00159">portname</a>, <a class="el" href="surveyor__driver_8h-source.html#l00161">position_addr</a>, <a class="el" href="surveyor__driver_8h-source.html#l00171">setup_image_mode</a>, and <a class="el" href="surveyor__driver_8h-source.html#l00166">srvdev</a>.</p>
 
 </div>
 </div><p>
@@ -253,7 +231,7 @@ Message handler that sends a response if necessary using Publish(). This functio
 
 <p>Definition at line <a class="el" href="surveyor__driver_8cc-source.html#l00232">232</a> of file <a class="el" href="surveyor__driver_8cc-source.html">surveyor_driver.cc</a>.</p>
 
-<p>References <a class="el" href="surveyor__driver_8h-source.html#l00170">pos_geom</a>, <a class="el" href="surveyor__driver_8h-source.html#l00162">position_addr</a>, <a class="el" href="surveyor__driver_8h-source.html#l00169">position_cmd</a>, and <a class="el" href="surveyor__driver_8h-source.html#l00167">srvdev</a>.</p>
+<p>References <a class="el" href="surveyor__driver_8h-source.html#l00169">pos_geom</a>, <a class="el" href="surveyor__driver_8h-source.html#l00161">position_addr</a>, <a class="el" href="surveyor__driver_8h-source.html#l00168">position_cmd</a>, and <a class="el" href="surveyor__driver_8h-source.html#l00166">srvdev</a>.</p>
 
 </div>
 </div><p>
@@ -279,7 +257,7 @@ Set up the device and start the device thread by calling StartThread(), which sp
 
 <p>Definition at line <a class="el" href="surveyor__driver_8cc-source.html#l00105">105</a> of file <a class="el" href="surveyor__driver_8cc-source.html">surveyor_driver.cc</a>.</p>
 
-<p>References <a class="el" href="surveyor__comms_8h-source.html#l00067">srv1_comm_t::image_mode</a>, <a class="el" href="surveyor__driver_8h-source.html#l00160">portname</a>, <a class="el" href="surveyor__driver_8h-source.html#l00172">setup_image_mode</a>, and <a class="el" href="surveyor__driver_8h-source.html#l00167">srvdev</a>.</p>
+<p>References <a class="el" href="surveyor__comms_8h-source.html#l00069">srv1_comm_t::image_mode</a>, <a class="el" href="surveyor__driver_8h-source.html#l00159">portname</a>, <a class="el" href="surveyor__driver_8h-source.html#l00171">setup_image_mode</a>, and <a class="el" href="surveyor__driver_8h-source.html#l00166">srvdev</a>.</p>
 
 </div>
 </div><p>
@@ -305,14 +283,14 @@ Shut down the device.
 
 <p>Definition at line <a class="el" href="surveyor__driver_8cc-source.html#l00130">130</a> of file <a class="el" href="surveyor__driver_8cc-source.html">surveyor_driver.cc</a>.</p>
 
-<p>References <a class="el" href="surveyor__driver_8h-source.html#l00167">srvdev</a>.</p>
+<p>References <a class="el" href="surveyor__driver_8h-source.html#l00166">srvdev</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="surveyor__driver_8h-source.html">surveyor_driver.h</a><li>src/<a class="el" href="surveyor__driver_8cc-source.html">surveyor_driver.cc</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 29 22:30:51 2009 for Player/Stage Plugin-Driver for Surveyor Robot SRV-1 (with ARM-7 processor) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sun Aug 30 01:44:35 2009 for Player/Stage Plugin-Driver for Surveyor Robot SRV-1 (with ARM-7 processor) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

@@ -27,14 +27,15 @@
 
 // CARLOS: comments this out for cpp:
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #include <stdint.h>
 #include <limits.h>
 
-// CARLOS: added libraries when using cpp:
-//#include <sstream>
+   // CARLOS: added libraries when using cpp:
+   //#include <sstream>
 
 #define SRV1_IMAGE_OFF 'Z'
 
@@ -49,71 +50,78 @@ extern "C" {
 
 #define SRV1_DIAMETER 0.10
 
-/**
- * @brief Type definition that is used in the communication link between the Surveyor Driver implementation and the robot itself
- * @ingroup driver_surveyor
- */
-typedef struct {
+   /**
+    * @brief Type definition that is used in the communication link between the Surveyor Driver implementation and the robot itself
+    * @ingroup driver_surveyor
+    */
+   typedef struct
+   {
 
-   char port[PATH_MAX]; ///< Serial port communicating on.
-   int fd; ///< fd if port is open. (-1 = not valid)
+         char port[PATH_MAX]; ///< Serial port communicating on.
+         int fd; ///< fd if port is open. (-1 = not valid)
 
-   double vx; ///< velocity in the x direction
-   double va; ///< angular velocity
+         double vx; ///< velocity in the x direction
+         double va; ///< angular velocity
 
-   unsigned char need_ir; ///< Do we need to read the IR?
-   int bouncedir[4]; ///< 0 = front, 1 = left, 2 = back, 3 = right
+         unsigned char need_ir; ///< Do we need to read the IR?
+         int bouncedir[4]; ///< 0 = front, 1 = left, 2 = back, 3 = right
 
-   unsigned char image_mode; ///< Mode we want images in.
-   unsigned char set_image_mode; ///< Mode that the camera is set to.
-   uint32_t frame_size; ///< size of JPEG frame
-   char *frame; ///< Frame that holds the actual image
+         unsigned char image_mode; ///< Mode we want images in.
+         unsigned char set_image_mode; ///< Mode that the camera is set to.
+         uint32_t frame_size; ///< size of JPEG frame
+         char *frame; ///< Frame that holds the actual image
 
-} srv1_comm_t;
+   } srv1_comm_t;
 
-/*
- * Creates a srv1 for use
- */
-srv1_comm_t *srv1_create(const char *port);
+   /*
+    * Creates a srv1 for use
+    */
+   srv1_comm_t *
+   srv1_create(const char *port);
 
-/*
- * Destroys.
- */
-void srv1_destroy(srv1_comm_t *x);
+   /*
+    * Destroys.
+    */
+   void
+   srv1_destroy(srv1_comm_t *x);
 
-/*
- * Initialized a srv1, connecting and checking the version
- */
-int srv1_init(srv1_comm_t *x);
+   /*
+    * Initialized a srv1, connecting and checking the version
+    */
+   int
+   srv1_init(srv1_comm_t *x);
 
-/*
- * Sets the speed.  Forward velocity trumps rotational velocity.
- *
- * This function sets the speed for 2.5 seconds, so there is
- * an automatic failsafe if the robot drives out of range.
- *
- * \param dx Speed in meters per second forward velocity
- * \param dw Speed in radians per second rotational velocity
- * \return 1 for success, 0 for failure.
- */
-int srv1_set_speed(srv1_comm_t *x, double dx, double dw);
+   /*
+    * Sets the speed.  Forward velocity trumps rotational velocity.
+    *
+    * This function sets the speed for 2.5 seconds, so there is
+    * an automatic failsafe if the robot drives out of range.
+    *
+    * \param dx Speed in meters per second forward velocity
+    * \param dw Speed in radians per second rotational velocity
+    * \return 1 for success, 0 for failure.
+    */
+   int
+   srv1_set_speed(srv1_comm_t *x, double dx, double dw);
 
-/*
- * Attempts to read the sensors that are enabled.
- * Currently only reads images and bounced IR data.
- * \param x robot structure.
- * \return 1 for success, 0 for failure.
- */
-int srv1_read_sensors(srv1_comm_t *x);
+   /*
+    * Attempts to read the sensors that are enabled.
+    * Currently only reads images and bounced IR data.
+    * \param x robot structure.
+    * \return 1 for success, 0 for failure.
+    */
+   int
+   srv1_read_sensors(srv1_comm_t *x);
 
-/*
- * Resets communication buffers by reading all data waiting
- * and querying the version once again.
- *
- * \param x robot structure
- * \return 1 for success, 0 for failure.
- */
-int srv1_reset_comms(srv1_comm_t *x);
+   /*
+    * Resets communication buffers by reading all data waiting
+    * and querying the version once again.
+    *
+    * \param x robot structure
+    * \return 1 for success, 0 for failure.
+    */
+   int
+   srv1_reset_comms(srv1_comm_t *x);
 
 /*
  * Returns an approximation of the distance an object is away with

@@ -169,8 +169,8 @@ srv1_open(srv1_comm_t *x)
 
    printf("Opening connection to Surveyor on %s...", x->port);
 
-// CARLOS: this was wrong, so it's corrected now:
-//   if ((fd = open(x->port, O_RDWR | O_NONBLOCK, S_IRUSR, S_IWUSR)) < 0)
+   // CARLOS: this was wrong, so it's corrected now:
+   //   if ((fd = open(x->port, O_RDWR | O_NONBLOCK, S_IRUSR, S_IWUSR)) < 0)
    if ((fd = open(x->port, O_RDWR | O_NONBLOCK, 00644)) < 0)
       {
          perror("surveyor_open():open():");
@@ -268,20 +268,9 @@ srv1_init(srv1_comm_t *x)
    //		spot++;
    //	}
 
-   //	Compiled before:
-   //         do { // CARLOS: Changed the array subscript that was below array bounds
-   //                  int num = read(x->fd, buf + spot, 1);
-   //                  if (num != 1) {
-   //                          printf("srv1_init(): Can't read a byte from surveyor!\n");
-   //                          return 0;
-   //                  }
-   //                  spot++;
-   //           }
-   //         while(buf[spot-1] != '\n');
-
-   // Original:
-   while (buf[spot - 1] != '\n')
-      {
+   //	CARLOS: fixed:
+   do
+      { // CARLOS: Changed the array subscript that was below array bounds
          int num = read(x->fd, buf + spot, 1);
          if (num != 1)
             {
@@ -290,6 +279,19 @@ srv1_init(srv1_comm_t *x)
             }
          spot++;
       }
+   while (buf[spot - 1] != '\n');
+
+   // Original was:
+   //   while (buf[spot - 1] != '\n')
+   //      {
+   //         int num = read(x->fd, buf + spot, 1);
+   //         if (num != 1)
+   //            {
+   //               printf("srv1_init(): Can't read a byte from surveyor!\n");
+   //               return 0;
+   //            }
+   //         spot++;
+   //      }
    // Print the version number
    printf("srv1_init(): successful init. HW %s", buf + 2);
 
@@ -521,7 +523,7 @@ srv1_set_motors(srv1_comm_t *x, signed char l, signed char r, double t)
             }
          printf("srv1_set_speed(): warning: failed response: %c%c!!!\n",
                cmdbuf[0], cmdbuf[1]);
-         		int bytes = srv1_flush_input(x);
+         int bytes = srv1_flush_input(x);
          printf("srv1: flushed %d bytes from input buffer\n", bytes);
          //		return 0;   // CARLOS: thinks this should be commented this out here
       }

@@ -159,9 +159,9 @@
 <a name="l00141"></a>00141 {
 <a name="l00142"></a>00142    <span class="keywordflow">for</span> (;;)
 <a name="l00143"></a>00143       {
-<a name="l00144"></a>00144 <span class="comment">//         printf("\nCARLOS: before Processing Messages()\n");</span>
+<a name="l00144"></a>00144          <span class="comment">//         printf("\nCARLOS: before Processing Messages()\n");</span>
 <a name="l00145"></a>00145          this-&gt;ProcessMessages();
-<a name="l00146"></a>00146 <span class="comment">//         printf("\nCARLOS: after Processing Messages()\n");</span>
+<a name="l00146"></a>00146          <span class="comment">//         printf("\nCARLOS: after Processing Messages()\n");</span>
 <a name="l00147"></a>00147 
 <a name="l00148"></a>00148          <span class="keywordflow">if</span> (!srv1_read_sensors(this-&gt;<a class="code" href="classSurveyor.html#2944f9704a7846b9607c5fc330f51a0a" title="The surveyor object.">srvdev</a>))
 <a name="l00149"></a>00149             {
@@ -181,7 +181,7 @@
 <a name="l00164"></a>00164          this-&gt;Publish(this-&gt;<a class="code" href="classSurveyor.html#0461b15e1ccc6ad41ba2b35c5c0a9fd9" title="Address of the position device (wheels odometry).">position_addr</a>, PLAYER_MSGTYPE_DATA,
 <a name="l00165"></a>00165                PLAYER_POSITION2D_DATA_STATE, (<span class="keywordtype">void</span>*) &amp;posdata, <span class="keyword">sizeof</span>(posdata),
 <a name="l00166"></a>00166                NULL);
-<a name="l00167"></a>00167 <span class="comment">//         printf("\nCARLOS: after Publishing()\n");</span>
+<a name="l00167"></a>00167          <span class="comment">//         printf("\nCARLOS: after Publishing()\n");</span>
 <a name="l00168"></a>00168 
 <a name="l00170"></a>00170          <span class="comment">// Update Camera data:</span>
 <a name="l00171"></a>00171          player_camera_data_t camdata;
@@ -208,10 +208,10 @@
 <a name="l00192"></a>00192          camdata.format = PLAYER_CAMERA_FORMAT_RGB888;
 <a name="l00193"></a>00193          camdata.compression = PLAYER_CAMERA_COMPRESS_JPEG;
 <a name="l00194"></a>00194 
-<a name="l00195"></a>00195 <span class="comment">// CARLOS: For debugging information</span>
-<a name="l00196"></a>00196 <span class="comment">//         printf("Surveyor::Main(): frame_size = %d\n", this-&gt;srvdev-&gt;frame_size);</span>
-<a name="l00197"></a>00197 <span class="comment">//         printf("Surveyor::Main(): image_mode = '%c'\n",</span>
-<a name="l00198"></a>00198 <span class="comment">//               this-&gt;srvdev-&gt;image_mode);</span>
+<a name="l00195"></a>00195          <span class="comment">// CARLOS: For debugging information</span>
+<a name="l00196"></a>00196          <span class="comment">//         printf("Surveyor::Main(): frame_size = %d\n", this-&gt;srvdev-&gt;frame_size);</span>
+<a name="l00197"></a>00197          <span class="comment">//         printf("Surveyor::Main(): image_mode = '%c'\n",</span>
+<a name="l00198"></a>00198          <span class="comment">//               this-&gt;srvdev-&gt;image_mode);</span>
 <a name="l00199"></a>00199 
 <a name="l00200"></a>00200          <span class="keywordflow">if</span> (this-&gt;<a class="code" href="classSurveyor.html#2944f9704a7846b9607c5fc330f51a0a" title="The surveyor object.">srvdev</a>-&gt;<a class="code" href="structsrv1__comm__t.html#eaaf7c9799da95f3d43434eb8fb7194e" title="Mode we want images in.">image_mode</a> != SRV1_IMAGE_OFF)
 <a name="l00201"></a>00201             {
@@ -227,7 +227,7 @@
 <a name="l00211"></a>00211                            camdata.image_count);
 <a name="l00212"></a>00212                   }
 <a name="l00213"></a>00213                memcpy(camdata.image, this-&gt;srvdev-&gt;frame, camdata.image_count);
-<a name="l00214"></a>00214 <span class="comment">//               printf("\nCARLOS: before Publishing CAMERA()\n");</span>
+<a name="l00214"></a>00214                <span class="comment">//               printf("\nCARLOS: before Publishing CAMERA()\n");</span>
 <a name="l00215"></a>00215 
 <a name="l00216"></a>00216                <span class="comment">// CARLOS: explicitly, writing image to file (for testing only)</span>
 <a name="l00217"></a>00217                <span class="comment">//             savePhoto("published", (char *)camdata.image, camdata.image_count);</span>
@@ -236,7 +236,7 @@
 <a name="l00220"></a>00220          this-&gt;Publish(this-&gt;<a class="code" href="classSurveyor.html#918eb3eda100f7d55a60f2a747f0c8ab" title="Address of the camera device.">camera_addr</a>, PLAYER_MSGTYPE_DATA,
 <a name="l00221"></a>00221                PLAYER_CAMERA_DATA_STATE, (<span class="keywordtype">void</span>*) &amp;camdata, <span class="keyword">sizeof</span>(camdata),
 <a name="l00222"></a>00222                NULL);
-<a name="l00223"></a>00223 <span class="comment">//         printf("\nCARLOS: after Publishing CAMERA()\n");</span>
+<a name="l00223"></a>00223          <span class="comment">//         printf("\nCARLOS: after Publishing CAMERA()\n");</span>
 <a name="l00224"></a>00224 
 <a name="l00225"></a>00225          <span class="comment">// TODO: add other interfaces' fills.</span>
 <a name="l00226"></a>00226 
@@ -317,7 +317,7 @@
 <a name="l00302"></a>00302    }
 <a name="l00303"></a>00303 }
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 29 22:30:50 2009 for Player/Stage Plugin-Driver for Surveyor Robot SRV-1 (with ARM-7 processor) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sun Aug 30 01:44:35 2009 for Player/Stage Plugin-Driver for Surveyor Robot SRV-1 (with ARM-7 processor) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

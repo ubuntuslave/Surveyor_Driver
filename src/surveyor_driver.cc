@@ -141,9 +141,9 @@ Surveyor::Main()
 {
    for (;;)
       {
-//         printf("\nCARLOS: before Processing Messages()\n");
+         //         printf("\nCARLOS: before Processing Messages()\n");
          this->ProcessMessages();
-//         printf("\nCARLOS: after Processing Messages()\n");
+         //         printf("\nCARLOS: after Processing Messages()\n");
 
          if (!srv1_read_sensors(this->srvdev))
             {
@@ -164,7 +164,7 @@ Surveyor::Main()
          this->Publish(this->position_addr, PLAYER_MSGTYPE_DATA,
                PLAYER_POSITION2D_DATA_STATE, (void*) &posdata, sizeof(posdata),
                NULL);
-//         printf("\nCARLOS: after Publishing()\n");
+         //         printf("\nCARLOS: after Publishing()\n");
 
          ////////////////////////////
          // Update Camera data:
@@ -192,10 +192,10 @@ Surveyor::Main()
          camdata.format = PLAYER_CAMERA_FORMAT_RGB888;
          camdata.compression = PLAYER_CAMERA_COMPRESS_JPEG;
 
-// CARLOS: For debugging information
-//         printf("Surveyor::Main(): frame_size = %d\n", this->srvdev->frame_size);
-//         printf("Surveyor::Main(): image_mode = '%c'\n",
-//               this->srvdev->image_mode);
+         // CARLOS: For debugging information
+         //         printf("Surveyor::Main(): frame_size = %d\n", this->srvdev->frame_size);
+         //         printf("Surveyor::Main(): image_mode = '%c'\n",
+         //               this->srvdev->image_mode);
 
          if (this->srvdev->image_mode != SRV1_IMAGE_OFF)
             {
@@ -211,7 +211,7 @@ Surveyor::Main()
                            camdata.image_count);
                   }
                memcpy(camdata.image, this->srvdev->frame, camdata.image_count);
-//               printf("\nCARLOS: before Publishing CAMERA()\n");
+               //               printf("\nCARLOS: before Publishing CAMERA()\n");
 
                // CARLOS: explicitly, writing image to file (for testing only)
                //             savePhoto("published", (char *)camdata.image, camdata.image_count);
@@ -220,7 +220,7 @@ Surveyor::Main()
          this->Publish(this->camera_addr, PLAYER_MSGTYPE_DATA,
                PLAYER_CAMERA_DATA_STATE, (void*) &camdata, sizeof(camdata),
                NULL);
-//         printf("\nCARLOS: after Publishing CAMERA()\n");
+         //         printf("\nCARLOS: after Publishing CAMERA()\n");
 
          // TODO: add other interfaces' fills.
 
