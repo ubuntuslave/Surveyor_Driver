@@ -1,7 +1,7 @@
 /*
  *  Player - One Hell of a Robot Server
- *  Copyright (C) 2007 -
- *      Michael Janssen
+ *  Copyright (C) 2007 -  Michael Janssen (original author)
+ *  Copyright (C) 2009 -  Carlos Jaramillo (current maintainer)
  *
  *  This program is free software; you can redistribute it and/or modify it
  *  under the terms of the GNU General Public License as published by the Free
@@ -28,7 +28,7 @@
 
 #include "surveyor_comms.h"
 
-#define SRVMIN_CYCLE_TIME 400000
+#define SRVMIN_CYCLE_TIME 200000
 
 /** @ingroup drivers */
 
@@ -40,7 +40,7 @@
 
  @ingroup driver_surveyor
 
- @brief Surveyor SRV-1 (with ARM-7 processor)
+ @brief Plugin Driver for Surveyor SRV-1 (with ARM-7 processor)
 
  These robots can be controlled via ZigBee which is attached to a USB
  serial port on a host computer.  The host computer runs the server which
@@ -58,19 +58,18 @@
  The surveyor driver provides the following device interfaces:
 
  - @ref interface_position2d
- - This interface does not return odometry data, but accepts
- velocity commands.
+    - This interface does not return odometry data, but accepts velocity commands.
 
  - @ref interface_camera
- - The camera on the robot returns JPEG images.
+    - The camera on the robot returns JPEG images.
 
  - @ref interface_ir
- - The robot has 4 IR beacons which can act as rudimentary range-finders
- - UNIMPLEMENTED
+    - The robot has 4 IR beacons which can act as rudimentary range-finders
+       - UNIMPLEMENTED
 
  - @ref interface_dio
- - The robot has 5 pins which can be used as digital in/out ports.
- - UNIMPLEMENTED
+    - The robot has 5 pins which can be used as digital in/out ports.
+       - UNIMPLEMENTED
 
  @par  Supported configuration requests
 
@@ -79,28 +78,35 @@
  @par  Configuration file options
 
  - port (string)
- - Default: "/dev/ttyUSB0"
- - Serial port used to communicate with the robot
+    - Serial port used to communicate with the robot
+       - Default: "/dev/ttyUSB0"
  - image_size (string)
- - Default: "320x240"
- - Size of the images returned by the camera.
- - Allowed values: "320x240", "160x128", "80x64"
+    - Size of the images returned by the camera.
+       - Default: "320x240"
+       - Allowed values: "320x240", "160x128", "80x64"
+ - plugin (string)
+    - Relative or Absolute path to the location of the shared-object plugin driver.
 
  @par  Example
 
  @verbatim
  driver
  (
- name "surveyor"
- provides ["position2d:0" "camera:0"]
- port "/dev/ttyUSB0"
+   name "surveyor"
+   plugin "libSurveyor_Driver.so"
+   provides ["position2d:0" "camera:0"]
+   port "/dev/ttyUSB0"
  )
  @endverbatim
 
+ @bug
+ - Camera interface appears delayed for an arbitrary sequence of snapshots
+ - Camera rate is very slow - about 1fps...Could do better: at least 4fps
+
  @todo
- - Implement IR
- - Implement DIO
  - Property bags to change image size on the fly
+ - Implement IR (IR sensors are very noisy and produce false negatives on dark and shiny obstacles)
+ - Implement DIO
  - Opaque interface to set program
 
  @author Michael Janssen (original author)
@@ -118,8 +124,8 @@ class Surveyor : public Driver
        */
       Surveyor(ConfigFile *cf, int section);
 
-      /** @brief Setup up the device and start the device thread by calling StartThread(), which spawns a new thread and executes
-       * Surveyor::Main(), which contains the main loop for the driver)
+      /** @brief Set up the device and start the device thread by calling StartThread(), which spawns a new thread and executes
+       * Surveyor::Main(), which contains the main loop for the driver
        * @returns 0 if things go well, and -1 otherwise.
        */
       int
@@ -132,7 +138,7 @@ class Surveyor : public Driver
       Shutdown();
 
 
-      /** @brief  Message Handler sends a response if necessary using Publish().
+      /** @brief  Message handler that sends a response if necessary using Publish().
        *  This function is called once for each message in the incoming queue.
        *  @param resp_queue The queue to which any response should go
        *  @param hdr The message header
@@ -150,22 +156,22 @@ class Surveyor : public Driver
       virtual void
       Main();
 
-      const char *portname;   // Serial port
+      const char *portname;   ///< Serial port
 
-      player_devaddr_t position_addr;  // Address of the position device (wheels odometry)
-      player_devaddr_t camera_addr;    // Address of the camera device
-      player_devaddr_t ir_addr;        // Address of the infrared (IR) beacons
-      player_devaddr_t dio_addr;       // Address of the digital input/output pins (ports)
+      player_devaddr_t position_addr;  ///< Address of the position device (wheels odometry)
+      player_devaddr_t camera_addr;    ///< Address of the camera device
+      player_devaddr_t ir_addr;        ///< Address of the infrared (IR) beacons
+      player_devaddr_t dio_addr;       ///< Address of the digital input/output pins (ports)
 
-      srv1_comm_t *srvdev;    // The surveyor object
+      srv1_comm_t *srvdev;    ///< The surveyor object
 
-      player_position2d_cmd_vel_t position_cmd; // position2d velocity command
-      player_position2d_geom_t pos_geom;        // position2d geometry
+      player_position2d_cmd_vel_t position_cmd; ///< position2d velocity command
+      player_position2d_geom_t pos_geom;        ///< position2d geometry
 
-      int setup_image_mode;      // Desired camera size
+      int setup_image_mode;      ///< Desired camera size
 };
 
-/** @brief Factory creation function
+/** @brief Factory creation function that instantiates the Driver
  * @returns a pointer (as a generic Driver*) to a new instance of this driver
  */
 Driver*

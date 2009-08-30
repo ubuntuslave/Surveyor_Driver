@@ -22,8 +22,8 @@
   </div>
 <h1>src/surveyor_driver.h</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
 <a name="l00002"></a>00002 <span class="comment"> *  Player - One Hell of a Robot Server</span>
-<a name="l00003"></a>00003 <span class="comment"> *  Copyright (C) 2007 -</span>
-<a name="l00004"></a>00004 <span class="comment"> *      Michael Janssen</span>
+<a name="l00003"></a>00003 <span class="comment"> *  Copyright (C) 2007 -  Michael Janssen (original author)</span>
+<a name="l00004"></a>00004 <span class="comment"> *  Copyright (C) 2009 -  Carlos Jaramillo (current maintainer)</span>
 <a name="l00005"></a>00005 <span class="comment"> *</span>
 <a name="l00006"></a>00006 <span class="comment"> *  This program is free software; you can redistribute it and/or modify it</span>
 <a name="l00007"></a>00007 <span class="comment"> *  under the terms of the GNU General Public License as published by the Free</span>
@@ -50,52 +50,52 @@
 <a name="l00028"></a>00028 
 <a name="l00029"></a>00029 <span class="preprocessor">#include "surveyor_comms.h"</span>
 <a name="l00030"></a>00030 
-<a name="l00031"></a>00031 <span class="preprocessor">#define SRVMIN_CYCLE_TIME 400000</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#define SRVMIN_CYCLE_TIME 200000</span>
 <a name="l00032"></a>00032 <span class="preprocessor"></span>
-<a name="l00112"></a><a class="code" href="classSurveyor.html">00112</a> <span class="keyword">class </span><a class="code" href="classSurveyor.html" title="Surveyor SRV-1 (with ARM-7 processor).">Surveyor</a> : <span class="keyword">public</span> Driver
-<a name="l00113"></a>00113 {
-<a name="l00114"></a>00114    <span class="keyword">public</span>:
-<a name="l00119"></a>00119       <a class="code" href="classSurveyor.html#b0792137ec4760d15de63856ebeb7464" title="Constructor for the Surveyor multi-interface driver.">Surveyor</a>(ConfigFile *cf, <span class="keywordtype">int</span> section);
-<a name="l00120"></a>00120 
-<a name="l00125"></a>00125       <span class="keywordtype">int</span>
-<a name="l00126"></a>00126       <a class="code" href="classSurveyor.html#c127d6028c08790fe79902b1b8359468" title="Setup up the device and start the device thread by calling StartThread(), which spawns...">Setup</a>();
-<a name="l00127"></a>00127 
+<a name="l00118"></a><a class="code" href="classSurveyor.html">00118</a> <span class="keyword">class </span><a class="code" href="classSurveyor.html" title="Plugin Driver for Surveyor SRV-1 (with ARM-7 processor).">Surveyor</a> : <span class="keyword">public</span> Driver
+<a name="l00119"></a>00119 {
+<a name="l00120"></a>00120    <span class="keyword">public</span>:
+<a name="l00125"></a>00125       <a class="code" href="classSurveyor.html#b0792137ec4760d15de63856ebeb7464" title="Constructor for the Surveyor multi-interface driver.">Surveyor</a>(ConfigFile *cf, <span class="keywordtype">int</span> section);
+<a name="l00126"></a>00126 
 <a name="l00131"></a>00131       <span class="keywordtype">int</span>
-<a name="l00132"></a>00132       <a class="code" href="classSurveyor.html#cfe0180d05f0a34474a75cdfd87b1a81" title="Shut down the device.">Shutdown</a>();
+<a name="l00132"></a>00132       <a class="code" href="classSurveyor.html#c127d6028c08790fe79902b1b8359468" title="Set up the device and start the device thread by calling StartThread(), which spawns...">Setup</a>();
 <a name="l00133"></a>00133 
-<a name="l00134"></a>00134 
-<a name="l00142"></a>00142       <span class="keywordtype">int</span>
-<a name="l00143"></a>00143       <a class="code" href="classSurveyor.html#9af107b9b363d15951303c3cbaf4328f" title="Message Handler sends a response if necessary using Publish(). This function is called...">ProcessMessage</a>(QueuePointer &amp; resp_queue, player_msghdr *hdr, <span class="keywordtype">void</span> *data);
-<a name="l00144"></a>00144 
-<a name="l00145"></a>00145    <span class="keyword">private</span>:
-<a name="l00146"></a>00146 
-<a name="l00150"></a>00150       <span class="keyword">virtual</span> <span class="keywordtype">void</span>
-<a name="l00151"></a>00151       Main();
+<a name="l00137"></a>00137       <span class="keywordtype">int</span>
+<a name="l00138"></a>00138       <a class="code" href="classSurveyor.html#cfe0180d05f0a34474a75cdfd87b1a81" title="Shut down the device.">Shutdown</a>();
+<a name="l00139"></a>00139 
+<a name="l00140"></a>00140 
+<a name="l00148"></a>00148       <span class="keywordtype">int</span>
+<a name="l00149"></a>00149       <a class="code" href="classSurveyor.html#9af107b9b363d15951303c3cbaf4328f" title="Message handler that sends a response if necessary using Publish(). This function...">ProcessMessage</a>(QueuePointer &amp; resp_queue, player_msghdr *hdr, <span class="keywordtype">void</span> *data);
+<a name="l00150"></a>00150 
+<a name="l00151"></a>00151    <span class="keyword">private</span>:
 <a name="l00152"></a>00152 
-<a name="l00153"></a>00153       <span class="keyword">const</span> <span class="keywordtype">char</span> *portname;   <span class="comment">// Serial port</span>
-<a name="l00154"></a>00154 
-<a name="l00155"></a>00155       player_devaddr_t position_addr;  <span class="comment">// Address of the position device (wheels odometry)</span>
-<a name="l00156"></a>00156       player_devaddr_t camera_addr;    <span class="comment">// Address of the camera device</span>
-<a name="l00157"></a>00157       player_devaddr_t ir_addr;        <span class="comment">// Address of the infrared (IR) beacons</span>
-<a name="l00158"></a>00158       player_devaddr_t dio_addr;       <span class="comment">// Address of the digital input/output pins (ports)</span>
-<a name="l00159"></a>00159 
-<a name="l00160"></a>00160       srv1_comm_t *srvdev;    <span class="comment">// The surveyor object</span>
-<a name="l00161"></a>00161 
-<a name="l00162"></a>00162       player_position2d_cmd_vel_t position_cmd; <span class="comment">// position2d velocity command</span>
-<a name="l00163"></a>00163       player_position2d_geom_t pos_geom;        <span class="comment">// position2d geometry</span>
-<a name="l00164"></a>00164 
-<a name="l00165"></a>00165       <span class="keywordtype">int</span> setup_image_mode;      <span class="comment">// Desired camera size</span>
-<a name="l00166"></a>00166 };
+<a name="l00156"></a>00156       <span class="keyword">virtual</span> <span class="keywordtype">void</span>
+<a name="l00157"></a>00157       <a class="code" href="classSurveyor.html#e6ae9ea8d60a2038b6dacdab7ccee458" title="Main &amp;quot;entry point&amp;quot; function for the driver thread created using StartThread()...">Main</a>();
+<a name="l00158"></a>00158 
+<a name="l00159"></a><a class="code" href="classSurveyor.html#38749a6bd74747baebfe451c31a421a2">00159</a>       <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="classSurveyor.html#38749a6bd74747baebfe451c31a421a2" title="Serial port.">portname</a>;   
+<a name="l00160"></a>00160 
+<a name="l00161"></a><a class="code" href="classSurveyor.html#0461b15e1ccc6ad41ba2b35c5c0a9fd9">00161</a>       player_devaddr_t <a class="code" href="classSurveyor.html#0461b15e1ccc6ad41ba2b35c5c0a9fd9" title="Address of the position device (wheels odometry).">position_addr</a>;  
+<a name="l00162"></a><a class="code" href="classSurveyor.html#918eb3eda100f7d55a60f2a747f0c8ab">00162</a>       player_devaddr_t <a class="code" href="classSurveyor.html#918eb3eda100f7d55a60f2a747f0c8ab" title="Address of the camera device.">camera_addr</a>;    
+<a name="l00163"></a><a class="code" href="classSurveyor.html#1bfadaaaab919f00e8cd57ee287cfac8">00163</a>       player_devaddr_t <a class="code" href="classSurveyor.html#1bfadaaaab919f00e8cd57ee287cfac8" title="Address of the infrared (IR) beacons.">ir_addr</a>;        
+<a name="l00164"></a><a class="code" href="classSurveyor.html#176ae803c97cadfc05b2cf88187b4ed2">00164</a>       player_devaddr_t <a class="code" href="classSurveyor.html#176ae803c97cadfc05b2cf88187b4ed2" title="Address of the digital input/output pins (ports).">dio_addr</a>;       
+<a name="l00165"></a>00165 
+<a name="l00166"></a><a class="code" href="classSurveyor.html#2944f9704a7846b9607c5fc330f51a0a">00166</a>       srv1_comm_t *<a class="code" href="classSurveyor.html#2944f9704a7846b9607c5fc330f51a0a" title="The surveyor object.">srvdev</a>;    
 <a name="l00167"></a>00167 
-<a name="l00171"></a>00171 Driver*
-<a name="l00172"></a>00172 Surveyor_Init(ConfigFile *cf, <span class="keywordtype">int</span> section);
+<a name="l00168"></a><a class="code" href="classSurveyor.html#1633824b8c32a4dc48aecafb5f775956">00168</a>       player_position2d_cmd_vel_t <a class="code" href="classSurveyor.html#1633824b8c32a4dc48aecafb5f775956" title="position2d velocity command">position_cmd</a>; 
+<a name="l00169"></a><a class="code" href="classSurveyor.html#d59f0d50a970033851d0c6e6e72d48b7">00169</a>       player_position2d_geom_t <a class="code" href="classSurveyor.html#d59f0d50a970033851d0c6e6e72d48b7" title="position2d geometry">pos_geom</a>;        
+<a name="l00170"></a>00170 
+<a name="l00171"></a><a class="code" href="classSurveyor.html#a9a8bda99bee792ea04267b650a4e161">00171</a>       <span class="keywordtype">int</span> <a class="code" href="classSurveyor.html#a9a8bda99bee792ea04267b650a4e161" title="Desired camera size.">setup_image_mode</a>;      
+<a name="l00172"></a>00172 };
 <a name="l00173"></a>00173 
-<a name="l00180"></a>00180 <span class="keywordtype">void</span>
-<a name="l00181"></a>00181 Surveyor_Register(DriverTable *table);
-<a name="l00182"></a>00182 
-<a name="l00183"></a>00183 <span class="preprocessor">#endif </span><span class="comment">/* SURVEYOR_DRIVER_H_ */</span>
+<a name="l00177"></a>00177 Driver*
+<a name="l00178"></a>00178 Surveyor_Init(ConfigFile *cf, <span class="keywordtype">int</span> section);
+<a name="l00179"></a>00179 
+<a name="l00186"></a>00186 <span class="keywordtype">void</span>
+<a name="l00187"></a>00187 Surveyor_Register(DriverTable *table);
+<a name="l00188"></a>00188 
+<a name="l00189"></a>00189 <span class="preprocessor">#endif </span><span class="comment">/* SURVEYOR_DRIVER_H_ */</span>
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Wed Aug 26 17:12:08 2009 for Player/Stage Plugin-Driver for Surveyor Robot SRV-1 (with ARM-7 processor) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 29 20:53:17 2009 for Player/Stage Plugin-Driver for Surveyor Robot SRV-1 (with ARM-7 processor) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

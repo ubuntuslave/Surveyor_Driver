@@ -1,0 +1,4 @@
+configfile.cc:186 error   : unable to open world file surveyor.cfg : No such file or directory
+server.cc:177 error   : failed to load config file surveyor.cfg
+configfile.cc:186 error   : unable to open world file surveyor.cfg : No such file or directory
+server.cc:177 error   : failed to load config file surveyor.cfg

@@ -1,4 +1,4 @@
-SRC = surveyor_driver.cc surveyor_driver.h surveyor_comms.c surveyor_comms.h
+SRC = surveyor_driver.cc surveyor_driver.h surveyor_comms.cpp surveyor_comms.h
 OBJLIBS = libsurveyordriver.so
 OBJS = surveyor_driver.o surveyor_comms.o
 
