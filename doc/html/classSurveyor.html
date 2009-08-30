@@ -75,7 +75,7 @@ player_devaddr_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Address of the digital input/output pins (ports). <br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="2944f9704a7846b9607c5fc330f51a0a"></a><!-- doxytag: member="Surveyor::srvdev" ref="2944f9704a7846b9607c5fc330f51a0a" args="" -->
-srv1_comm_t *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSurveyor.html#2944f9704a7846b9607c5fc330f51a0a">srvdev</a></td></tr>
+<a class="el" href="structsrv1__comm__t.html">srv1_comm_t</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSurveyor.html#2944f9704a7846b9607c5fc330f51a0a">srvdev</a></td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The surveyor object. <br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="1633824b8c32a4dc48aecafb5f775956"></a><!-- doxytag: member="Surveyor::position_cmd" ref="1633824b8c32a4dc48aecafb5f775956" args="" -->
@@ -98,7 +98,7 @@ These robots can be controlled via ZigBee which is attached to a USB serial port
 <dl class="note" compact><dt><b>Note:</b></dt><dd>The newer SRV-1 robot (with Blackfin processor) has not yet been tested with this driver.</dd></dl>
 <dl class="user" compact><dt><b>Compile-time dependencies</b></dt><dd></dd></dl>
 <ul>
-<li>none</li></ul>
+<li>`pkg-config --cflags playerc++`</li></ul>
 <p>
 <dl class="user" compact><dt><b>Provides</b></dt><dd></dd></dl>
 The surveyor driver provides the following device interfaces:<p>
@@ -203,7 +203,7 @@ Constructor for the <a class="el" href="classSurveyor.html" title="Plugin Driver
 
 <p>Definition at line <a class="el" href="surveyor__driver_8cc-source.html#l00042">42</a> of file <a class="el" href="surveyor__driver_8cc-source.html">surveyor_driver.cc</a>.</p>
 
-<p>References <a class="el" href="surveyor__driver_8h-source.html#l00162">camera_addr</a>, <a class="el" href="surveyor__driver_8h-source.html#l00164">dio_addr</a>, <a class="el" href="surveyor__driver_8h-source.html#l00163">ir_addr</a>, <a class="el" href="surveyor__driver_8h-source.html#l00159">portname</a>, <a class="el" href="surveyor__driver_8h-source.html#l00161">position_addr</a>, <a class="el" href="surveyor__driver_8h-source.html#l00171">setup_image_mode</a>, and <a class="el" href="surveyor__driver_8h-source.html#l00166">srvdev</a>.</p>
+<p>References <a class="el" href="surveyor__driver_8h-source.html#l00163">camera_addr</a>, <a class="el" href="surveyor__driver_8h-source.html#l00165">dio_addr</a>, <a class="el" href="surveyor__driver_8h-source.html#l00164">ir_addr</a>, <a class="el" href="surveyor__driver_8h-source.html#l00160">portname</a>, <a class="el" href="surveyor__driver_8h-source.html#l00162">position_addr</a>, <a class="el" href="surveyor__driver_8h-source.html#l00172">setup_image_mode</a>, and <a class="el" href="surveyor__driver_8h-source.html#l00167">srvdev</a>.</p>
 
 </div>
 </div><p>
@@ -251,9 +251,9 @@ Message handler that sends a response if necessary using Publish(). This functio
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>0 if the message in handled, and -1 otherwise. A NACK (Negative Acknowledgment) will be sent if a response is required. </dd></dl>
 
-<p>Definition at line <a class="el" href="surveyor__driver_8cc-source.html#l00227">227</a> of file <a class="el" href="surveyor__driver_8cc-source.html">surveyor_driver.cc</a>.</p>
+<p>Definition at line <a class="el" href="surveyor__driver_8cc-source.html#l00232">232</a> of file <a class="el" href="surveyor__driver_8cc-source.html">surveyor_driver.cc</a>.</p>
 
-<p>References <a class="el" href="surveyor__driver_8h-source.html#l00169">pos_geom</a>, <a class="el" href="surveyor__driver_8h-source.html#l00161">position_addr</a>, <a class="el" href="surveyor__driver_8h-source.html#l00168">position_cmd</a>, and <a class="el" href="surveyor__driver_8h-source.html#l00166">srvdev</a>.</p>
+<p>References <a class="el" href="surveyor__driver_8h-source.html#l00170">pos_geom</a>, <a class="el" href="surveyor__driver_8h-source.html#l00162">position_addr</a>, <a class="el" href="surveyor__driver_8h-source.html#l00169">position_cmd</a>, and <a class="el" href="surveyor__driver_8h-source.html#l00167">srvdev</a>.</p>
 
 </div>
 </div><p>
@@ -277,9 +277,9 @@ Set up the device and start the device thread by calling StartThread(), which sp
 <p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>0 if things go well, and -1 otherwise. </dd></dl>
 
-<p>Definition at line <a class="el" href="surveyor__driver_8cc-source.html#l00100">100</a> of file <a class="el" href="surveyor__driver_8cc-source.html">surveyor_driver.cc</a>.</p>
+<p>Definition at line <a class="el" href="surveyor__driver_8cc-source.html#l00105">105</a> of file <a class="el" href="surveyor__driver_8cc-source.html">surveyor_driver.cc</a>.</p>
 
-<p>References <a class="el" href="surveyor__driver_8h-source.html#l00159">portname</a>, <a class="el" href="surveyor__driver_8h-source.html#l00171">setup_image_mode</a>, and <a class="el" href="surveyor__driver_8h-source.html#l00166">srvdev</a>.</p>
+<p>References <a class="el" href="surveyor__comms_8h-source.html#l00067">srv1_comm_t::image_mode</a>, <a class="el" href="surveyor__driver_8h-source.html#l00160">portname</a>, <a class="el" href="surveyor__driver_8h-source.html#l00172">setup_image_mode</a>, and <a class="el" href="surveyor__driver_8h-source.html#l00167">srvdev</a>.</p>
 
 </div>
 </div><p>
@@ -303,16 +303,16 @@ Shut down the device.
 <p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>0 when the device has been completely shut down. </dd></dl>
 
-<p>Definition at line <a class="el" href="surveyor__driver_8cc-source.html#l00125">125</a> of file <a class="el" href="surveyor__driver_8cc-source.html">surveyor_driver.cc</a>.</p>
+<p>Definition at line <a class="el" href="surveyor__driver_8cc-source.html#l00130">130</a> of file <a class="el" href="surveyor__driver_8cc-source.html">surveyor_driver.cc</a>.</p>
 
-<p>References <a class="el" href="surveyor__driver_8h-source.html#l00166">srvdev</a>.</p>
+<p>References <a class="el" href="surveyor__driver_8h-source.html#l00167">srvdev</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="surveyor__driver_8h-source.html">surveyor_driver.h</a><li>src/<a class="el" href="surveyor__driver_8cc-source.html">surveyor_driver.cc</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 29 20:53:17 2009 for Player/Stage Plugin-Driver for Surveyor Robot SRV-1 (with ARM-7 processor) by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 29 22:30:51 2009 for Player/Stage Plugin-Driver for Surveyor Robot SRV-1 (with ARM-7 processor) by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

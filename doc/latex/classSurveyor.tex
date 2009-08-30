@@ -55,7 +55,7 @@ player\_\-devaddr\_\-t \hyperlink{classSurveyor_176ae803c97cadfc05b2cf88187b4ed2
 
 \begin{CompactList}\small\item\em Address of the digital input/output pins (ports). \item\end{CompactList}\item 
 \hypertarget{classSurveyor_2944f9704a7846b9607c5fc330f51a0a}{
-srv1\_\-comm\_\-t $\ast$ \hyperlink{classSurveyor_2944f9704a7846b9607c5fc330f51a0a}{srvdev}}
+\hyperlink{structsrv1__comm__t}{srv1\_\-comm\_\-t} $\ast$ \hyperlink{classSurveyor_2944f9704a7846b9607c5fc330f51a0a}{srvdev}}
 \label{classSurveyor_2944f9704a7846b9607c5fc330f51a0a}
 
 \begin{CompactList}\small\item\em The surveyor object. \item\end{CompactList}\item 
@@ -86,7 +86,7 @@ These robots can be controlled via ZigBee which is attached to a USB serial port
 \begin{Desc}
 \item[Compile-time dependencies]\end{Desc}
 \begin{itemize}
-\item none\end{itemize}
+\item `pkg-config --cflags playerc++`\end{itemize}
 
 
 \begin{Desc}
@@ -217,7 +217,7 @@ Message handler that sends a response if necessary using Publish(). This functio
 \item[Returns:]0 if the message in handled, and -1 otherwise. A NACK (Negative Acknowledgment) will be sent if a response is required. \end{Desc}
 
 
-Definition at line 227 of file surveyor\_\-driver.cc.
+Definition at line 232 of file surveyor\_\-driver.cc.
 
 References pos\_\-geom, position\_\-addr, position\_\-cmd, and srvdev.\hypertarget{classSurveyor_c127d6028c08790fe79902b1b8359468}{
 \index{Surveyor@{Surveyor}!Setup@{Setup}}
@@ -232,9 +232,9 @@ Set up the device and start the device thread by calling StartThread(), which sp
 \item[Returns:]0 if things go well, and -1 otherwise. \end{Desc}
 
 
-Definition at line 100 of file surveyor\_\-driver.cc.
+Definition at line 105 of file surveyor\_\-driver.cc.
 
-References portname, setup\_\-image\_\-mode, and srvdev.\hypertarget{classSurveyor_cfe0180d05f0a34474a75cdfd87b1a81}{
+References srv1\_\-comm\_\-t::image\_\-mode, portname, setup\_\-image\_\-mode, and srvdev.\hypertarget{classSurveyor_cfe0180d05f0a34474a75cdfd87b1a81}{
 \index{Surveyor@{Surveyor}!Shutdown@{Shutdown}}
 \index{Shutdown@{Shutdown}!Surveyor@{Surveyor}}
 \subsubsection[{Shutdown}]{\setlength{\rightskip}{0pt plus 5cm}int Surveyor::Shutdown ()}}
@@ -247,7 +247,7 @@ Shut down the device.
 \item[Returns:]0 when the device has been completely shut down. \end{Desc}
 
 
-Definition at line 125 of file surveyor\_\-driver.cc.
+Definition at line 130 of file surveyor\_\-driver.cc.
 
 References srvdev.
 

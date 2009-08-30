@@ -169,7 +169,9 @@ srv1_open(srv1_comm_t *x)
 
    printf("Opening connection to Surveyor on %s...", x->port);
 
-   if ((fd = open(x->port, O_RDWR | O_NONBLOCK, S_IRUSR, S_IWUSR)) < 0)
+// CARLOS: this was wrong, so it's corrected now:
+//   if ((fd = open(x->port, O_RDWR | O_NONBLOCK, S_IRUSR, S_IWUSR)) < 0)
+   if ((fd = open(x->port, O_RDWR | O_NONBLOCK, 00644)) < 0)
       {
          perror("surveyor_open():open():");
          return 0;
@@ -213,7 +215,7 @@ srv1_open(srv1_comm_t *x)
 void
 srv1_close(srv1_comm_t *x)
 {
-   printf("\nCARLOS: now closing srv1_close()\n");
+   printf("\nNow closing: srv1_close()\n");
    srv1_set_speed(x, 0, 0);
 
    close(x->fd);
@@ -519,8 +521,8 @@ srv1_set_motors(srv1_comm_t *x, signed char l, signed char r, double t)
             }
          printf("srv1_set_speed(): warning: failed response: %c%c!!!\n",
                cmdbuf[0], cmdbuf[1]);
-         //		int bytes = srv1_flush_input(x);
-         printf("srv1: flushed %d bytes from input buffer..\n");
+         		int bytes = srv1_flush_input(x);
+         printf("srv1: flushed %d bytes from input buffer\n", bytes);
          //		return 0;   // CARLOS: thinks this should be commented this out here
       }
 

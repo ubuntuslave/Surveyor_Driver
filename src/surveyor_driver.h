@@ -51,7 +51,7 @@
 
  @par  Compile-time dependencies
 
- - none
+ - `pkg-config --cflags playerc++`
 
  @par  Provides
 
@@ -123,6 +123,7 @@ class Surveyor : public Driver
        * @param section Current section in configuration file
        */
       Surveyor(ConfigFile *cf, int section);
+//      ~Surveyor(void);  ///< Destructor
 
       /** @brief Set up the device and start the device thread by calling StartThread(), which spawns a new thread and executes
        * Surveyor::Main(), which contains the main loop for the driver

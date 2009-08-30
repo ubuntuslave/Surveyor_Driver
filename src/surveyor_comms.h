@@ -49,24 +49,27 @@
 
 #define SRV1_DIAMETER 0.10
 
+/**
+ * @brief Type definition that is used in the communication link between the Surveyor Driver implementation and the robot itself
+ * @ingroup driver_surveyor
+ */
 typedef struct {
 
-   char port[PATH_MAX]; //< Serial port communicating on.
-   int fd; //< fd if port is open. (-1 = not valid)
+   char port[PATH_MAX]; ///< Serial port communicating on.
+   int fd; ///< fd if port is open. (-1 = not valid)
 
-   double vx; //< velocity in the x direction
-   double va; //< angular velocity
+   double vx; ///< velocity in the x direction
+   double va; ///< angular velocity
 
-   unsigned char need_ir; //< Do we need to read the IR?
-   int bouncedir[4]; //< 0 = front, 1 = left, 2 = back, 3 = right
+   unsigned char need_ir; ///< Do we need to read the IR?
+   int bouncedir[4]; ///< 0 = front, 1 = left, 2 = back, 3 = right
 
-   unsigned char image_mode; //< Mode we want images in.
-   unsigned char set_image_mode; //< Mode that the camera is set to.
-   uint32_t frame_size; //< size of JPEG frame
-   char *frame; //< Frame
+   unsigned char image_mode; ///< Mode we want images in.
+   unsigned char set_image_mode; ///< Mode that the camera is set to.
+   uint32_t frame_size; ///< size of JPEG frame
+   char *frame; ///< Frame that holds the actual image
 
 } srv1_comm_t;
-
 
 /*
  * Creates a srv1 for use

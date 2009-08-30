@@ -96,6 +96,11 @@ Surveyor::Surveyor(ConfigFile *cf, int section) :
    puts("Constructor is done!");
 }
 
+//Surveyor::~Surveyor(void)
+//{
+//
+//}
+
 int
 Surveyor::Setup()
 {
