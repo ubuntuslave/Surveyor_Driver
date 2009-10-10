@@ -115,7 +115,8 @@
  */
 /** @} */
 
-class Surveyor : public Driver
+//class Surveyor : public Driver
+class Surveyor : public ThreadedDriver
 {
    public:
       /** @brief Constructor for the Surveyor multi-interface driver.
@@ -130,13 +131,21 @@ class Surveyor : public Driver
        * @returns 0 if things go well, and -1 otherwise.
        */
       int
-      Setup();
+      MainSetup();   // replaces Setup() for Player 3.x
+//    int Setup();
+
+      /** @brief Cleans up driver resources, but does not terminate the driver.
+       * Different from the destructor since a driver may be stopped/started multiple times
+       */
+      void
+      MainQuit();  // Added in Player 3.x
 
       /** @brief  Shut down the device
        * @returns 0 when the device has been completely shut down.
        */
-      int
-      Shutdown();
+      // No Longer required in Player 3.x
+      //      int
+      //      Shutdown();
 
       /** @brief  Message handler that sends a response if necessary using Publish().
        *  This function is called once for each message in the incoming queue.

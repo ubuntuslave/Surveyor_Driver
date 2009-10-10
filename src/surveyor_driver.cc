@@ -40,7 +40,8 @@ Surveyor_Register(DriverTable *table)
  * and then reads and adds the interfaces provided in the configuration file.
  */
 Surveyor::Surveyor(ConfigFile *cf, int section) :
-   Driver(cf, section, true, PLAYER_MSGQUEUE_DEFAULT_MAXLEN)
+   ThreadedDriver(cf, section, true, PLAYER_MSGQUEUE_DEFAULT_MAXLEN)
+//   Driver(cf, section, true, PLAYER_MSGQUEUE_DEFAULT_MAXLEN)
 {
    memset(&this->position_addr, 0, sizeof(player_devaddr_t));
    memset(&this->camera_addr, 0, sizeof(player_devaddr_t));
@@ -102,7 +103,8 @@ Surveyor::Surveyor(ConfigFile *cf, int section) :
 //}
 
 int
-Surveyor::Setup()
+Surveyor::MainSetup()   // for Player 3.x
+//Surveyor::Setup()     / for Player 2.x
 {
    this->srvdev = srv1_create(this->portname);
 
@@ -126,14 +128,15 @@ Surveyor::Setup()
    return 0;
 }
 
-int
-Surveyor::Shutdown()
+
+void Surveyor::MainQuit()    // for Player 3.x
+//int Surveyor::Shutdown()  // for Player 2.x
 {
    puts("Shutting surveyor driver down");
    this->StopThread();
    srv1_destroy(this->srvdev);
    this->srvdev = NULL;
-   return 0;
+   return;
 }
 
 void
@@ -141,90 +144,93 @@ Surveyor::Main()
 {
    for (;;)
       {
-         //         printf("\nCARLOS: before Processing Messages()\n");
-         this->ProcessMessages();
-         //         printf("\nCARLOS: after Processing Messages()\n");
+      // test if we are supposed to cancel
+      pthread_testcancel();   // New in player 3.x
 
-         if (!srv1_read_sensors(this->srvdev))
+      //         printf("\nCARLOS: before Processing Messages()\n");
+      this->ProcessMessages();
+      //         printf("\nCARLOS: after Processing Messages()\n");
+
+      if (!srv1_read_sensors(this->srvdev))
+         {
+         PLAYER_ERROR("failed to retrieve sensors from SRV-1");
+         srv1_destroy(this->srvdev);
+         return;
+         }
+      printf("\nCARLOS: before Publishing()\n");
+
+      ////////////////////////////
+      // Update position2d data;
+      player_position2d_data_t posdata;
+      memset(&posdata, 0, sizeof(posdata));
+
+      posdata.vel.px = this->srvdev->vx;
+      posdata.vel.pa = this->srvdev->va;
+
+      this->Publish(this->position_addr, PLAYER_MSGTYPE_DATA,
+            PLAYER_POSITION2D_DATA_STATE, (void*) &posdata, sizeof(posdata),
+            NULL);
+      //         printf("\nCARLOS: after Publishing()\n");
+
+      ////////////////////////////
+      // Update Camera data:
+      player_camera_data_t camdata;
+      memset(&camdata, 0, sizeof(camdata));
+
+      switch (this->srvdev->image_mode)
+      {
+         case SRV1_IMAGE_SMALL:
+            camdata.width = 80;
+            camdata.height = 64;
+            break;
+         case SRV1_IMAGE_MED:
+            camdata.width = 160;
+            camdata.height = 128;
+            break;
+         case SRV1_IMAGE_BIG:
+            camdata.width = 320;
+            camdata.height = 240;
+            break;
+      }
+
+      camdata.fdiv = 1;
+      camdata.bpp = 24;
+      camdata.format = PLAYER_CAMERA_FORMAT_RGB888;
+      camdata.compression = PLAYER_CAMERA_COMPRESS_JPEG;
+
+      // CARLOS: For debugging information
+      //         printf("Surveyor::Main(): frame_size = %d\n", this->srvdev->frame_size);
+      //         printf("Surveyor::Main(): image_mode = '%c'\n",
+      //               this->srvdev->image_mode);
+
+      if (this->srvdev->image_mode != SRV1_IMAGE_OFF)
+         {
+         camdata.image_count = this->srvdev->frame_size;
+
+         if (camdata.image == NULL)
             {
-               PLAYER_ERROR("failed to retrieve sensors from SRV-1");
-               srv1_destroy(this->srvdev);
-               return;
+            camdata.image = (uint8_t *) malloc(camdata.image_count);
             }
-         printf("\nCARLOS: before Publishing()\n");
-
-         ////////////////////////////
-         // Update position2d data;
-         player_position2d_data_t posdata;
-         memset(&posdata, 0, sizeof(posdata));
-
-         posdata.vel.px = this->srvdev->vx;
-         posdata.vel.pa = this->srvdev->va;
-
-         this->Publish(this->position_addr, PLAYER_MSGTYPE_DATA,
-               PLAYER_POSITION2D_DATA_STATE, (void*) &posdata, sizeof(posdata),
-               NULL);
-         //         printf("\nCARLOS: after Publishing()\n");
-
-         ////////////////////////////
-         // Update Camera data:
-         player_camera_data_t camdata;
-         memset(&camdata, 0, sizeof(camdata));
-
-         switch (this->srvdev->image_mode)
+         else
             {
-            case SRV1_IMAGE_SMALL:
-               camdata.width = 80;
-               camdata.height = 64;
-               break;
-            case SRV1_IMAGE_MED:
-               camdata.width = 160;
-               camdata.height = 128;
-               break;
-            case SRV1_IMAGE_BIG:
-               camdata.width = 320;
-               camdata.height = 240;
-               break;
+            camdata.image = (uint8_t *) realloc(camdata.image,
+                  camdata.image_count);
             }
+         memcpy(camdata.image, this->srvdev->frame, camdata.image_count);
+         //               printf("\nCARLOS: before Publishing CAMERA()\n");
 
-         camdata.fdiv = 1;
-         camdata.bpp = 24;
-         camdata.format = PLAYER_CAMERA_FORMAT_RGB888;
-         camdata.compression = PLAYER_CAMERA_COMPRESS_JPEG;
+         // CARLOS: explicitly, writing image to file (for testing only)
+         //             savePhoto("published", (char *)camdata.image, camdata.image_count);
+         }
 
-         // CARLOS: For debugging information
-         //         printf("Surveyor::Main(): frame_size = %d\n", this->srvdev->frame_size);
-         //         printf("Surveyor::Main(): image_mode = '%c'\n",
-         //               this->srvdev->image_mode);
+      this->Publish(this->camera_addr, PLAYER_MSGTYPE_DATA,
+            PLAYER_CAMERA_DATA_STATE, (void*) &camdata, sizeof(camdata),
+            NULL);
+      //         printf("\nCARLOS: after Publishing CAMERA()\n");
 
-         if (this->srvdev->image_mode != SRV1_IMAGE_OFF)
-            {
-               camdata.image_count = this->srvdev->frame_size;
+      // TODO: add other interfaces' fills.
 
-               if (camdata.image == NULL)
-                  {
-                     camdata.image = (uint8_t *) malloc(camdata.image_count);
-                  }
-               else
-                  {
-                     camdata.image = (uint8_t *) realloc(camdata.image,
-                           camdata.image_count);
-                  }
-               memcpy(camdata.image, this->srvdev->frame, camdata.image_count);
-               //               printf("\nCARLOS: before Publishing CAMERA()\n");
-
-               // CARLOS: explicitly, writing image to file (for testing only)
-               //             savePhoto("published", (char *)camdata.image, camdata.image_count);
-            }
-
-         this->Publish(this->camera_addr, PLAYER_MSGTYPE_DATA,
-               PLAYER_CAMERA_DATA_STATE, (void*) &camdata, sizeof(camdata),
-               NULL);
-         //         printf("\nCARLOS: after Publishing CAMERA()\n");
-
-         // TODO: add other interfaces' fills.
-
-         usleep(SRVMIN_CYCLE_TIME);
+      usleep(SRVMIN_CYCLE_TIME);
       }
 }
 
