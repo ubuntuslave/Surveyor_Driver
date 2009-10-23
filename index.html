@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>ubuntuslave/Surveyor_Driver @ GitHub</title>
+	
+	<style type="text/css">
+		body {
+  		margin-top: 1.0em;
+  		background-color: #000000;
+		  font-family: "Helvetica,Arial,FreeSans"; 
+  		color: #ffffff;
+    }
+    #container {
+      margin: 0 auto;
+      width: 700px;
+    }
+		h1 { font-size: 3.8em; color: #ffffff; margin-bottom: 3px; }
+		h1 .small { font-size: 0.4em; }
+		h1 a { text-decoration: none }
+		h2 { font-size: 1.5em; color: #ffffff; }
+    h3 { text-align: center; color: #ffffff; }
+    a { color: #ffffff; }
+    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
+    .download { float: right; }
+		pre { background: #000; color: #fff; padding: 15px;}
+    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+    .footer { text-align:center; padding-top:30px; font-style: italic; }
+	</style>
+	
+</head>
+
+<body>
+  <a href="http://github.com/ubuntuslave/Surveyor_Driver"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+  
+  <div id="container">
+
+    <div class="download">
+      <a href="http://github.com/ubuntuslave/Surveyor_Driver/zipball/master">
+        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
+      <a href="http://github.com/ubuntuslave/Surveyor_Driver/tarball/master">
+        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
+    </div>
+      
+    <h1><a href="http://github.com/ubuntuslave/Surveyor_Driver">Surveyor_Driver</a> 
+      <span class="small">by <a href="http://github.com/ubuntuslave">ubuntuslave</a></span></h1>
+
+    <div class="description">
+      Player/Stage Plugin-Driver for Surveyor Robot SRV-1 (with ARM-7 processor) 
+    </div>
+
+    <p>Plugin Driver for Surveyor SRV-1 (with ARM-7 processor).
+
+These robots can be controlled via ZigBee which is attached to a USB serial port on a host computer. The host computer runs the server which then communicates to the robot.
+
+This version works with Player 3.x</p><h2>Dependencies</h2>
+<p>player 3.0</p>
+<h2>Install</h2>
+<p>Note:
+    The newer SRV-1 robot (with Blackfin processor) has not yet been tested with this driver.
+
+Compile-time dependencies
+
+    * `pkg-config --cflags playerc++`
+
+Provides
+
+The surveyor driver provides the following device interfaces:
+
+    * interface_position2d
+    * This interface does not return odometry data, but accepts velocity commands.
+
+    * interface_camera
+    * The camera on the robot returns JPEG images.
+
+    * interface_ir
+    * The robot has 4 IR beacons which can act as rudimentary range-finders
+    * UNIMPLEMENTED
+
+    * interface_dio
+    * The robot has 5 pins which can be used as digital in/out ports.
+    * UNIMPLEMENTED
+
+Supported configuration requests
+
+    * none
+
+Configuration file options
+
+    * port (string)
+    * Serial port used to communicate with the robot
+    * Default: "/dev/ttyUSB0"
+    * image_size (string)
+    * Size of the images returned by the camera.
+    * Default: "320x240"
+    * Allowed values: "320x240", "160x128", "80x64"
+    * plugin (string)
+    * Relative or Absolute path to the location of the shared-object plugin driver.
+
+Example
+
+ driver
+    (
+       name "surveyor"
+       plugin "libSurveyor_Driver.so"
+       provides ["position2d:0" "camera:0"]
+       port "/dev/ttyUSB0"
+    )
+ </p>
+<h2>License</h2>
+<p>GPL</p>
+<h2>Authors</h2>
+<p>Carlos Jaramillo (ubuntuslave@gmail.com)<br/><br/>      </p>
+<h2>Contact</h2>
+<p> (ubuntuslave@gmail.com)<br/>      </p>
+
+
+    <h2>Download</h2>
+    <p>
+      You can download this project in either
+      <a href="http://github.com/ubuntuslave/Surveyor_Driver/zipball/master">zip</a> or
+      <a href="http://github.com/ubuntuslave/Surveyor_Driver/tarball/master">tar</a> formats.
+    </p>
+    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
+      by running:
+      <pre>$ git clone git://github.com/ubuntuslave/Surveyor_Driver</pre>
+    </p>
+      
+    <div class="footer">
+      get the source code on GitHub : <a href="http://github.com/ubuntuslave/Surveyor_Driver">ubuntuslave/Surveyor_Driver</a>
+    </div>
+    
+  </div>
+
+  
+</body>
+</html>
