@@ -1,0 +1,18 @@
+This program was developed using Eclipse "Galileo", so it's just as easy to import this project into the IDE.
+
+Otherwise, just go into the "src" folder and compile the shared-object from the command line, by typing:
+
+  $ make
+
+Which will produce a file named "libSurveyor_Driver.so"
+
+You could take this shared object file to any other location if you wish, but try to keep it consistent to the
+plugin option in the configuration file named "surveyor.cfg"
+
+To run Player for the SRV-1, just type:
+
+  $ player surveyor.cfg
+
+Enjoy Player on the SRV-1 (tested only on the ARM-7 processor)
+Please contribute bug fixes if you wish,
+I'm currently reachable at ubuntuslave@gmail.com
