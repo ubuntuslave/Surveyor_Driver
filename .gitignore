@@ -1,3 +1,30 @@
+# IDE stuff
+.project
+.settings
+..bfg-report
+
+# Markdown garbage
+.*.md.html
+
+# Python stuff
+*.pyc
+__init__.pyc
+.pydevproject
+*Config.py
+code.py
+# Don't track checkpoints
+.ipynb_checkpoints
+
+# Some usual extensions and folders
+.DS_Store
+*~
+*.bak
+*.suo
+*.ncb
+*.user
+*.tmp
+
+# This project in particular
 qtc-gdbmacros
 .DS_Store
 *~
@@ -6,4 +33,5 @@ qtc-gdbmacros
 .player
 backup
 doc
-Debug/src
+Debug
+Release
