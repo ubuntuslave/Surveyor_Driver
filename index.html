@@ -1,140 +1,139 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Surveyor driver by ubuntuslave</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Surveyor driver</h1>
+      <h2 class="project-tagline">Player/Stage Plugin-Driver for Surveyor Robot SRV-1 (with ARM-7 processor) </h2>
+      <a href="https://github.com/ubuntuslave/Surveyor_Driver" class="btn">View on GitHub</a>
+      <a href="https://github.com/ubuntuslave/Surveyor_Driver/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/ubuntuslave/Surveyor_Driver/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <section class="main-content">
+      <h3>
+<a id="plugin-driver-for-surveyor-srv-1-with-arm-7-processor" class="anchor" href="#plugin-driver-for-surveyor-srv-1-with-arm-7-processor" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Plugin Driver for Surveyor SRV-1 (with ARM-7 processor).</h3>
 
-	<title>ubuntuslave/Surveyor_Driver @ GitHub</title>
-	
-	<style type="text/css">
-		body {
-  		margin-top: 1.0em;
-  		background-color: #000000;
-		  font-family: "Helvetica,Arial,FreeSans"; 
-  		color: #ffffff;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-		h1 { font-size: 3.8em; color: #ffffff; margin-bottom: 3px; }
-		h1 .small { font-size: 0.4em; }
-		h1 a { text-decoration: none }
-		h2 { font-size: 1.5em; color: #ffffff; }
-    h3 { text-align: center; color: #ffffff; }
-    a { color: #ffffff; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-		pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-	</style>
-	
-</head>
+<p>These robots can be controlled via ZigBee which is attached to a USB serial port on a host computer. The host computer runs the server which then communicates to the robot.</p>
 
-<body>
-  <a href="http://github.com/ubuntuslave/Surveyor_Driver"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
-  
-  <div id="container">
+<p>This version works with Player 3.x</p>
 
-    <div class="download">
-      <a href="http://github.com/ubuntuslave/Surveyor_Driver/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/ubuntuslave/Surveyor_Driver/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
-    </div>
-      
-    <h1><a href="http://github.com/ubuntuslave/Surveyor_Driver">Surveyor_Driver</a> 
-      <span class="small">by <a href="http://github.com/ubuntuslave">ubuntuslave</a></span></h1>
+<h4>
+<a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Dependencies</h4>
 
-    <div class="description">
-      Player/Stage Plugin-Driver for Surveyor Robot SRV-1 (with ARM-7 processor) 
-    </div>
+<ul>
+<li>player 3.0</li>
+</ul>
 
-    <p>Plugin Driver for Surveyor SRV-1 (with ARM-7 processor).
+<h4>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install</h4>
 
-These robots can be controlled via ZigBee which is attached to a USB serial port on a host computer. The host computer runs the server which then communicates to the robot.
+<p><strong><em>Note:</em></strong> The newer SRV-1 robot (with Blackfin processor) has not yet been tested with this driver.</p>
 
-This version works with Player 3.x</p><h2>Dependencies</h2>
-<p>player 3.0</p>
-<h2>Install</h2>
-<p>Note:
-    The newer SRV-1 robot (with Blackfin processor) has not yet been tested with this driver.
+<h4>
+<a id="compile-time-dependencies" class="anchor" href="#compile-time-dependencies" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Compile-time dependencies</h4>
 
-Compile-time dependencies
+<pre><code>`pkg-config --cflags playerc++`
+</code></pre>
 
-    * `pkg-config --cflags playerc++`
+<h4>
+<a id="provides" class="anchor" href="#provides" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Provides</h4>
 
-Provides
+<p>The surveyor driver provides the following device interfaces:</p>
 
-The surveyor driver provides the following device interfaces:
+<ul>
+<li>
+<p>interface_position2d</p>
 
-    * interface_position2d
-    * This interface does not return odometry data, but accepts velocity commands.
+<ul>
+<li>This interface does not return odometry data, but accepts velocity commands.</li>
+</ul>
+</li>
+<li>
+<p>interface_camera</p>
 
-    * interface_camera
-    * The camera on the robot returns JPEG images.
+<ul>
+<li>The camera on the robot returns JPEG images.</li>
+</ul>
+</li>
+<li>
+<p>interface_ir</p>
 
-    * interface_ir
-    * The robot has 4 IR beacons which can act as rudimentary range-finders
-    * UNIMPLEMENTED
+<ul>
+<li>The robot has 4 IR beacons which can act as rudimentary range-finders</li>
+<li>UNIMPLEMENTED</li>
+</ul>
+</li>
+<li>
+<p>interface_dio</p>
 
-    * interface_dio
-    * The robot has 5 pins which can be used as digital in/out ports.
-    * UNIMPLEMENTED
+<ul>
+<li>The robot has 5 pins which can be used as digital in/out ports.</li>
+<li>UNIMPLEMENTED</li>
+</ul>
+</li>
+</ul>
 
-Supported configuration requests
+<h5>
+<a id="supported-configuration-requests" class="anchor" href="#supported-configuration-requests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Supported configuration requests</h5>
 
-    * none
+<ul>
+<li>none</li>
+</ul>
 
-Configuration file options
+<h5>
+<a id="configuration-file-options" class="anchor" href="#configuration-file-options" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuration file options</h5>
 
-    * port (string)
-    * Serial port used to communicate with the robot
-    * Default: "/dev/ttyUSB0"
-    * image_size (string)
-    * Size of the images returned by the camera.
-    * Default: "320x240"
-    * Allowed values: "320x240", "160x128", "80x64"
-    * plugin (string)
-    * Relative or Absolute path to the location of the shared-object plugin driver.
+<ul>
+<li>port (string)</li>
+<li>Serial port used to communicate with the robot</li>
+<li>Default: "/dev/ttyUSB0"</li>
+<li>image_size (string)</li>
+<li>Size of the images returned by the camera.</li>
+<li>Default: "320x240"</li>
+<li>Allowed values: "320x240", "160x128", "80x64"</li>
+<li>plugin (string)</li>
+<li>Relative or Absolute path to the location of the shared-object plugin driver.</li>
+</ul>
 
-Example
+<h5>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example</h5>
 
- driver
+<pre><code> driver
     (
        name "surveyor"
        plugin "libSurveyor_Driver.so"
        provides ["position2d:0" "camera:0"]
        port "/dev/ttyUSB0"
     )
- </p>
-<h2>License</h2>
+</code></pre>
+
+<h3>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h3>
+
 <p>GPL</p>
-<h2>Authors</h2>
-<p>Carlos Jaramillo (ubuntuslave@gmail.com)<br/><br/>      </p>
-<h2>Contact</h2>
-<p> (ubuntuslave@gmail.com)<br/>      </p>
 
+<h3>
+<a id="author" class="anchor" href="#author" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Author</h3>
 
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/ubuntuslave/Surveyor_Driver/zipball/master">zip</a> or
-      <a href="http://github.com/ubuntuslave/Surveyor_Driver/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/ubuntuslave/Surveyor_Driver</pre>
-    </p>
-      
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/ubuntuslave/Surveyor_Driver">ubuntuslave/Surveyor_Driver</a>
-    </div>
-    
-  </div>
+<p>Carlos Jaramillo</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/ubuntuslave/Surveyor_Driver">Surveyor driver</a> is maintained by <a href="https://github.com/ubuntuslave">ubuntuslave</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
 
   
-</body>
+  </body>
 </html>
